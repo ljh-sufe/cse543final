@@ -118,4 +118,4 @@ for stock in stockList:
         b = b.append(a)
 
 b.index.name = "time"
-b.reset_index().sort_values(by=["time", "stock"]).set_index(["time", "stock"])
+b = b.reset_index().sort_values(by=["time", "stock"]).set_index(["time", "stock"])
