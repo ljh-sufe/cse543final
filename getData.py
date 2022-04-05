@@ -43,7 +43,7 @@ factorsList = ["SMA", "EMA", "WMA", "DEMA", "TEMA", "TRIMA", "KAMA", "MAMA"]
 # get X for predicting return
 for factor in factorsList:
 
-    filepath = "/Users/lanjunhao/Desktop/csefinal/data/" + factor + "/"
+    filepath = "data/" + factor + "/"
     if not os.path.exists(filepath):
         os.makedirs(filepath)
     files = os.listdir(filepath)
@@ -104,7 +104,7 @@ for stock in stockList:
 
     a = None
     for factor in factorsList:
-        filepath = "/Users/lanjunhao/Desktop/csefinal/data/" + factor + "/"
+        filepath = "data/" + factor + "/"
         d = pd.read_csv(filepath + stock + "_" + factor + "_monthly_10.csv").set_index("Unnamed: 0")
         if a is None:
             a = d
@@ -119,3 +119,7 @@ for stock in stockList:
 
 b.index.name = "time"
 b = b.reset_index().sort_values(by=["time", "stock"]).set_index(["time", "stock"])
+
+
+
+test
