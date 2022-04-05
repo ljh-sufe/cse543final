@@ -16,3 +16,10 @@ def makeurlMA(keyword, stock, interval, time_period, series_type="close", key=ke
     time_period = str(time_period)
     url = "https://www.alphavantage.co/query?function=" + keyword + "&symbol=" + stock + "&interval=" + interval + "&time_period=" + time_period + "&series_type=" + series_type + "&apikey=" + key
     return url
+
+
+
+def makeurlHT(keyword, stock, interval, series_type="close", key=key):
+    interval = str(interval)
+    url = "https://www.alphavantage.co/query?function=" + keyword + "&symbol=" + stock + "&interval=" + interval + "&series_type=" + series_type + "&apikey=" + key
+    return url

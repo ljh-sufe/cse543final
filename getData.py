@@ -1,7 +1,7 @@
 import time
 
-from utils import key, makeurl, makeurlMA, makeFactorName
-
+from utils import key, makeurl, makeurlMA, makeFactorName, makeurlHT
+import os
 import pandas as pd
 import requests
 from tqdm import tqdm
@@ -36,10 +36,14 @@ stockList = sp500cons.Ticker.value_counts().index.to_list()
 #         pass
 
 
-import os
+
 
 dateList = pd.date_range("2000-01-01", "2022-04-04", freq="M")
-factorsList = ["SMA", "EMA", "WMA", "DEMA", "TEMA", "TRIMA", "KAMA", "MAMA"]
+
+
+
+
+factorsList = ["SMA", "EMA", "WMA", "DEMA", "TEMA", "TRIMA", "KAMA", "MAMA", "HT_TRENDLINE"]
 # get X for predicting return
 for factor in factorsList:
 
@@ -52,8 +56,8 @@ for factor in factorsList:
     pause = 0
 
     for count, stock in enumerate(tqdm(stockList)):
-
-        if timeit.default_timer() - nowtime > 60 and count - pause > 75:  # if this loop executes more than 75 times in a minute, stop for a while
+        # if this loop executes more than 75 times in a minute, stop for a while
+        if timeit.default_timer() - nowtime > 60 and count - pause > 75:
             time.sleep(5)
             nowtime = timeit.default_timer()
             pause = pause + 75
@@ -63,7 +67,10 @@ for factor in factorsList:
         if filename in files:
             continue
 
-        url = makeurlMA(keyword=factor, stock=stock, interval="monthly", time_period=10)
+        if "MA" in factor:
+            url = makeurlMA(keyword=factor, stock=stock, interval="monthly", time_period=10)
+        elif "HT" in factor:
+            url = makeurlHT(keyword=factor, stock=stock, interval="monthly")
         try:
             r = requests.get(url)
             data = r.json()
@@ -89,16 +96,22 @@ for factor in factorsList:
         a.to_csv(filepath + filename)
     print(factor)
 
-# url = makeurl(keyword="BALANCE_SHEET", stock="IBM")
-# r = requests.get(url)
-# data = r.json()
-#
-# print(data)
 
-# factorsList = ["SMA", "EMA", "WMA"]
-import os
 
-stockList
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 b = None
 for stock in stockList:
 
@@ -122,4 +135,4 @@ b = b.reset_index().sort_values(by=["time", "stock"]).set_index(["time", "stock"
 
 
 
-test
+b.corr()
