@@ -6,6 +6,10 @@ import pandas as pd
 import requests
 from tqdm import tqdm
 import timeit
+import pandas_datareader.data as pdr
+import pandas as pd
+import datetime as dt
+from pathlib import Path
 
 sp500cons = pd.read_csv("spxstocks.csv")
 
@@ -39,6 +43,12 @@ if test:
 #     except:
 #         pass
 
+# Get stock history of 10 years
+start = dt.datetime(2010, 1, 1)
+end = dt.datetime(2021, 1, 1)
+stock_code = 'GE'
+df = pdr.DataReader(stock_code, 'yahoo', start, end)
+df.head(10)
 
 dateList = pd.date_range("2000-01-01", "2022-04-04", freq="BM")
 dateList = [x.__str__()[0:10] for x in dateList]
